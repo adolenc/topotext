@@ -1,23 +1,23 @@
 from nltk.tokenize import RegexpTokenizer
-from nltk.corpus import stopwords
 
 
 def BasicPrepreprocessor(text):
     '''Basic preprocessor removes non alpha-numeric symbols
     and capitalization'''
 
-    return Preprocessor(text, False, False)
+    return Prepreprocessor(text, False, False, False)
 
-def Prepreprocessor(text, remove_stopwords=True, lemmatize=True):
+def Prepreprocessor(text, remove_stopwords=True, stem=True, lemmatize=True):
     tokenizer = RegexpTokenizer(r'\w+')
     tokens = [w.lower() for w in tokenizer.tokenize(text)]
 
     if remove_stopwords:
+        from nltk.corpus import stopwords
         stops = set(stopwords.words('english'))
         tokens = [w for w in tokens if w not in stops]
 
     if stem:
-        from nltk.stem.porter import *
+        from nltk.stem.porter import PorterStemmer
         stemmer = PorterStemmer()
         tokens = [stemmer.stem(w) for w in tokens]
 
@@ -31,9 +31,9 @@ def Prepreprocessor(text, remove_stopwords=True, lemmatize=True):
 
 if __name__ == '__main__':
     text = "This is a string with dot. dots... comma, commas,,, and more .. ? /.-'\;;'[-\n[;';'=-"
-    print BasicPreprocessor(text)
+    print BasicPrepreprocessor(text)
 
     text = "This is a string with dot. dots... comma, commas,,, and more .. ? /.-'\;;'[-\n[;';'=- Testing testers tests test"
-    print Preprocessor(text)
+    print Prepreprocessor(text)
 
 
