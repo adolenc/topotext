@@ -28,14 +28,14 @@ class Preprocessor():
         calculated by applying prepreprocessor, feature_funs and optionally
         tf/idf.
         """
-        texts = flatten(map(load_directory, datasets))
-        pp_texts = map(self.prepreprocessor_, texts)
+        texts = map(load_directory, datasets)
+        y = flatten([[n] * len(d) for n, d in enumerate(texts)])
+        pp_texts = map(self.prepreprocessor_, flatten(texts))
         X = np.array([flatten([f(text) for f in self.feature_funs_]) for text in pp_texts])
         if self.use_tfidf_:
             # TODO: pass pp_texts to tfidf to generate self.use_tfidf_ number
             # of new features and glue them to X
             pass
-        y = flatten([[n] * len(d) for n, d in enumerate(datasets)])
         return np.array(X), np.array(y)
 
 
