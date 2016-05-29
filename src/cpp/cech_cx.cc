@@ -9,6 +9,8 @@
 #include <algorithm>
 
 #include <iostream>
+#include <cmath>
+#include <iomanip>
 #include <fstream>
 
 
@@ -46,7 +48,7 @@ void add_simplices(CechFiltration& sv, int d, const PointContainer& points)
             mb.check_in(points[indices[i]]);
         }
         mb.build();
-        s.data() = mb.squared_radius();
+        s.data() = std::sqrt(mb.squared_radius());
         sv.push_back(s);
 
         
@@ -105,6 +107,11 @@ int main(int argc, char** argv)
     for (int i = 0; i <= homology_d + 1; ++i)
         add_simplices(cf, i, points);
     rInfo("Size of SimplexVector: %d", cf.size());
+
+    // Print min ball radii and the accompanying simplices, sorted by radii
+    cf.sort(Smplx::DataComparison());
+    for (CechFiltration::Index s = cf.begin(); s != cf.end(); ++s)
+        std::cout << std::fixed << std::setprecision(4) << s->data() << " " << (*s) << std::endl;
 
     // Sort the filtration
     cf.sort(DataDimensionComparison<Smplx>());
