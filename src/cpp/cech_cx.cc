@@ -97,11 +97,13 @@ CechFiltration cech_filtration(const PointContainer& points, int homology_d)
 
 int main(int argc, char** argv) 
 {
+    bool show_progress = false;
 #ifdef LOGGING
     rlog::RLogInit(argc, argv);
 
     stdoutLog.subscribeTo( RLOG_CHANNEL("info") );
     stdoutLog.subscribeTo( RLOG_CHANNEL("error") );
+    show_progress = true;
 #endif
 
     SetFrequency(GetCounter("persistence/pair"), 10000);
@@ -122,7 +124,7 @@ int main(int argc, char** argv)
     // Compute persistence
     Persistence p(cf);
     rInfo("Persistence initialized");
-    p.pair_simplices(false);
+    p.pair_simplices(show_progress);
     rInfo("Simplices paired");
 
     Persistence::SimplexMap<CechFiltration>     m = p.make_simplex_map(cf);
@@ -131,6 +133,7 @@ int main(int argc, char** argv)
                   evaluate_through_map(m, Smplx::DataEvaluator()), 
                   evaluate_through_map(m,  Smplx::DimensionExtractor()));
 
+    std::cout.precision(17);
     for (int i = 0; i <= homology_d; ++i)
     {
         std::cout << i << " " << dgms[i].size() << std::endl << dgms[i] << std::endl;
