@@ -1,6 +1,6 @@
 import numpy as np
 from tf_idf import *
-from utils import flatten,load_directory
+from utils import flatten,load_directory,write_matrix
 from prepreprocessor import *
 
 
@@ -47,5 +47,4 @@ if __name__ == '__main__':
     X, y = pp.process(['../data/abstracts/', '../data/abstracts'])
     print X.shape
     print X
-
-    
+    write_matrix(X, "test.mat")
