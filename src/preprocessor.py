@@ -1,4 +1,5 @@
 import numpy as np
+import tf_idf
 from utils import flatten,load_directory
 
 
