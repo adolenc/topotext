@@ -1,6 +1,7 @@
 import numpy as np
-import tf_idf
+from tf_idf import *
 from utils import flatten,load_directory
+from prepreprocessor import *
 
 
 class Preprocessor():
@@ -34,12 +35,26 @@ class Preprocessor():
         pp_texts = map(self.prepreprocessor_, flatten(texts))
         X = np.array([flatten([f(text) for f in self.feature_funs_]) for text in pp_texts])
         if self.use_tfidf_:
-            # TODO: pass pp_texts to tfidf to generate self.use_tfidf_ number
-            # of new features and glue them to X
-            pass
+            words = get_words(pp_texts, self.use_tfidf_)
+            M = get_M(pp_texts, words)
+            tf_idf = get_tf_idf_M(M) # generate self.use_tfidf_ number of new features
+            X = np.hstack((X, tf_idf)) # glue them to X
         return np.array(X), np.array(y)
 
 
 if __name__ == '__main__':
-    pp = Preprocessor(lambda x: x, [lambda ws: [len(ws)], lambda ws: [len(ws)/100.0]], use_tfidf=100)
-    print pp.process(['../data/abstracts/', '../data/abstracts'])
+    #If BasicPreprocessor is used, the first few columns of tf_idf will be 0 since the most comon words
+    #are stop words and are found in all texts and idf will equal to 0
+    pp = Preprocessor(BasicPrepreprocessor, [lambda ws: [len(ws)], lambda ws: [len(ws)/100.0]])
+    X, y = pp.process(['../data/abstracts/', '../data/abstracts'])
+    print X.shape
+    pp = Preprocessor(BasicPrepreprocessor, [lambda ws: [len(ws)], lambda ws: [len(ws)/100.0]], use_tfidf=20)
+    X, y = pp.process(['../data/abstracts/', '../data/abstracts'])
+    print X.shape
+    
+    pp = Preprocessor(Prepreprocessor, [lambda ws: [len(ws)], lambda ws: [len(ws)/100.0]], use_tfidf=20)
+    X, y = pp.process(['../data/abstracts/', '../data/abstracts'])
+    print X.shape
+    #UnicodeDecodeError: 'ascii' codec can't decode byte 0xe2 in position 7: ordinal not in range(128)
+
+    
