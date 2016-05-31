@@ -37,9 +37,9 @@ def get_tf_idf_M(M, norm_samps=False):
     tf_M = np.copy(M) #just the frequency of the word in a text
     idf_v = []
     for i in range(M.shape[1]): #get the number of texts that contain a word words[i]
-        idf_v.append(np.count_nonzero(M[:,i])) #count the non zero values in columns of matrix M
+        idf_v.append(np.count_nonzero(tf_M[:,i])) #count the non zero values in columns of matrix M
     idf_v = np.array(idf_v)
-    idf_v = np.log(N/idf_v)
+    idf_v = np.log(float(N)/idf_v)
     tf_idf_M = tf_M*idf_v
     if norm_samps:
         normalizer = Normalizer()

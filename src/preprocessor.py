@@ -43,18 +43,9 @@ class Preprocessor():
 
 
 if __name__ == '__main__':
-    #If BasicPreprocessor is used, the first few columns of tf_idf will be 0 since the most comon words
-    #are stop words and are found in all texts and idf will equal to 0
-    pp = Preprocessor(BasicPrepreprocessor, [lambda ws: [len(ws)], lambda ws: [len(ws)/100.0]])
+    pp = Preprocessor(Prepreprocessor, [lambda ws: [len(ws)], lambda ws: [len(ws)/100.0]], use_tfidf=3)
     X, y = pp.process(['../data/abstracts/', '../data/abstracts'])
     print X.shape
-    pp = Preprocessor(BasicPrepreprocessor, [lambda ws: [len(ws)], lambda ws: [len(ws)/100.0]], use_tfidf=20)
-    X, y = pp.process(['../data/abstracts/', '../data/abstracts'])
-    print X.shape
-    
-    pp = Preprocessor(Prepreprocessor, [lambda ws: [len(ws)], lambda ws: [len(ws)/100.0]], use_tfidf=20)
-    X, y = pp.process(['../data/abstracts/', '../data/abstracts'])
-    print X.shape
-    #UnicodeDecodeError: 'ascii' codec can't decode byte 0xe2 in position 7: ordinal not in range(128)
+    print X
 
     
