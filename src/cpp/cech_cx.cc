@@ -66,6 +66,35 @@ void add_simplices(CechFiltration& sv, int d, const PointContainer& points)
     }
 }
 
+PointContainer read_points(std::istream& in, int n_points, int ambient_d)
+{
+    PointContainer points;
+    while (n_points--)
+    {
+        Point p(ambient_d);
+        for (int i = 0; i < ambient_d; ++i)
+            in >> p[i];
+        points.push_back(p);
+    }
+    rInfo("Points read: %d", points.size());
+    return points;
+}
+
+CechFiltration cech_filtration(const PointContainer& points, int homology_d)
+{
+    int num_simplices = 0;
+    for (int i = 0; i <= homology_d + 1; ++i)
+        num_simplices += choose(points.size(), i+1);
+    rInfo("Reserved SimplexVector of size: %d", num_simplices);
+
+    CechFiltration cf;
+    for (int i = 0; i <= homology_d + 1; ++i)
+        add_simplices(cf, i, points);
+    rInfo("Size of SimplexVector: %d", cf.size());
+
+    return cf;
+}
+
 int main(int argc, char** argv) 
 {
 #ifdef LOGGING
@@ -78,41 +107,14 @@ int main(int argc, char** argv)
     SetFrequency(GetCounter("persistence/pair"), 10000);
     SetTrigger(GetCounter("persistence/pair"), GetCounter(""));
 
-    // Read in the point set and compute its Delaunay triangulation
     std::istream& in = std::cin;
-    int n_points, ambient_d, homology_d = 2;
+    int homology_d = 2;
+    int n_points, ambient_d;
+
     in >> n_points >> ambient_d;
-    
-    rInfo("Ambient dimension: %d", ambient_d);
-    rInfo("Will compute PD up to dimension: %d", homology_d);
-    
-    // Read points
-    PointContainer points;
-    while (n_points--)
-    {
-        Point p(ambient_d);
-        for (int i = 0; i < ambient_d; ++i)
-            in >> p[i];
-        points.push_back(p);
-    }
-    rInfo("Points read: %d", points.size());
+    PointContainer points = read_points(in, n_points, ambient_d);
    
-    // Compute simplices with their Cech values
-    int num_simplices = 0;
-    for (int i = 0; i <= homology_d + 1; ++i)
-        num_simplices += choose(points.size(), i+1);
-    rInfo("Reserved SimplexVector of size: %d", num_simplices);
-
-    CechFiltration cf;
-    for (int i = 0; i <= homology_d + 1; ++i)
-        add_simplices(cf, i, points);
-    rInfo("Size of SimplexVector: %d", cf.size());
-
-    // Print min ball radii and the accompanying simplices, sorted by radii
-    cf.sort(Smplx::DataComparison());
-    for (CechFiltration::Index s = cf.begin(); s != cf.end(); ++s)
-        std::cout << std::fixed << std::setprecision(4) << s->data() << " " << (*s) << std::endl;
-
+    CechFiltration cf = cech_filtration(points, homology_d);
     // Sort the filtration
     cf.sort(DataDimensionComparison<Smplx>());
     rInfo("Filtration initialized");
@@ -120,7 +122,7 @@ int main(int argc, char** argv)
     // Compute persistence
     Persistence p(cf);
     rInfo("Persistence initialized");
-    p.pair_simplices();
+    p.pair_simplices(false);
     rInfo("Simplices paired");
 
     Persistence::SimplexMap<CechFiltration>     m = p.make_simplex_map(cf);
@@ -131,7 +133,6 @@ int main(int argc, char** argv)
 
     for (int i = 0; i <= homology_d; ++i)
     {
-        std::cout << i << std::endl << dgms[i] << std::endl;
+        std::cout << i << " " << dgms[i].size() << std::endl << dgms[i] << std::endl;
     }
 }
-
