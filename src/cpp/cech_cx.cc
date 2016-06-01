@@ -117,25 +117,9 @@ int main(int argc, char** argv)
     PointContainer points = read_points(in, n_points, ambient_d);
    
     CechFiltration cf = cech_filtration(points, homology_d);
-    // Sort the filtration
-    cf.sort(DataDimensionComparison<Smplx>());
-    rInfo("Filtration initialized");
 
-    // Compute persistence
-    Persistence p(cf);
-    rInfo("Persistence initialized");
-    p.pair_simplices(show_progress);
-    rInfo("Simplices paired");
-
-    Persistence::SimplexMap<CechFiltration>     m = p.make_simplex_map(cf);
-    std::map<Dimension, PDgm> dgms;
-    init_diagrams(dgms, p.begin(), p.end(), 
-                  evaluate_through_map(m, Smplx::DataEvaluator()), 
-                  evaluate_through_map(m,  Smplx::DimensionExtractor()));
-
-    std::cout.precision(17);
-    for (int i = 0; i <= homology_d; ++i)
-    {
-        std::cout << i << " " << dgms[i].size() << std::endl << dgms[i] << std::endl;
-    }
+    cf.sort(Smplx::DataComparison());
+    std::cout << std::fixed << std::setprecision(17); 
+    for (CechFiltration::Index s = cf.begin(); s != cf.end(); ++s)
+        std::cout << s->data() << " " << (*s) << std::endl; 
 }
