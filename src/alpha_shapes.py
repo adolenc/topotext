@@ -9,11 +9,12 @@ def pca_proj(feature_matrix, n_comp=3):
 def alpha_shapes(feature_matrix):
     cx = Filtration()
     fill_alpha_complex(feature_matrix.tolist(), cx)
-##    alphashape = [s for s in cx if s.data[0] <= .5]
-    for s in cx: print s
+    return cx
 
 if __name__ == '__main__':
-    feature_matrix = np.reshape(np.random.sample(70), (10,7))
-    projection = pca_proj(feature_matrix, 2)
-    print projection
-    alpha_shapes(projection)
+    feature_matrix = np.reshape(np.random.sample(70), (10,7)) #sample matrix
+    projection = pca_proj(feature_matrix) #pca
+    alpha_shapes_cx = alpha_shapes(projection) #calculate alpha shapes
+    #iterate over the simplices in the complex (Filtration class)
+    for s in alpha_shapes_cx:
+        print s, s.data[0]
