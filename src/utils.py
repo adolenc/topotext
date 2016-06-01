@@ -1,5 +1,6 @@
 from dionysus import Simplex
 from os import listdir
+import numpy as np
 
 def read_file(filename):
     """ Read a file into a string. """
@@ -47,3 +48,8 @@ def map_flatten(array):
 
 def map_map(fn, array):
     return map(lambda x: map(fn, x), array)
+
+def get_groups(X, y):
+    indices = [np.where(y==k) for k in np.unique(y)]
+    return [X[i] for i in indices]
+   
