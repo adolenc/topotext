@@ -23,5 +23,5 @@ if __name__ == "__main__":
     persistances = {1: [(1,2), (4,5), (2, float("inf")), (1,4), (4,5)],
                     2: [(2,5), (1,3)],
                     3: [(3,4), (3, float("inf"))]}
-    print fix_infs(persistances)
+    persistances = fix_infs(persistances)
     draw_persistance_diagram(persistances)
