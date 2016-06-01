@@ -1,5 +1,6 @@
 from dionysus import Simplex
 from os import listdir
+import numpy as np
 
 def read_file(filename):
     """ Read a file into a string. """
@@ -38,3 +39,8 @@ def read_cx(filename):
 
 def zipWith(x1, x2, fn):
     return [fn(p[0],p[1]) for p in zip(x1,x2)]
+
+def get_groups(X, y):
+    indices = [np.where(y==k) for k in np.unique(y)]
+    return [X[i] for i in indices]
+   
