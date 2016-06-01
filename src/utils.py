@@ -1,3 +1,4 @@
+from dionysus import Simplex
 from os import listdir
 
 def read_file(filename):
@@ -22,3 +23,15 @@ def write_matrix(X, filename, separator=' '):
         f.write(str(rows) + ' ' + str(cols) + '\n')
         for row in X:
             f.write(separator.join(map(str, row)) + '\n')
+
+def read_cx(filename):
+    """ Read simplicial complex from file. Complex should be stored as a
+    simplex per row along with the distance at which it is added into
+    complex:
+    distance <[comma separated list of vertices]>
+    """
+    def parse_line(line):
+        r, sx = line.strip()[:-1].split('<')
+        return Simplex(map(int, sx.split(',')), float(r))
+    with open(filename, 'r') as f:
+        return [parse_line(line) for line in f]
