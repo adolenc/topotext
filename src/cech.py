@@ -1,5 +1,5 @@
 from dionysus import *
-from utils import read_cx
+from utils import read_cx,write_matrix
 import shutil
 import os
 import subprocess
