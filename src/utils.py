@@ -1,3 +1,4 @@
+from dionysus import Simplex
 from os import listdir
 
 def read_file(filename):
@@ -31,6 +32,6 @@ def read_cx(filename):
     """
     def parse_line(line):
         r, sx = line.strip()[:-1].split('<')
-        return float(r), map(int, sx.split(','))
+        return Simplex(map(int, sx.split(',')), float(r))
     with open(filename, 'r') as f:
         return [parse_line(line) for line in f]
