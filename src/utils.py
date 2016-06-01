@@ -35,3 +35,6 @@ def read_cx(filename):
         return Simplex(map(int, sx.split(',')), float(r))
     with open(filename, 'r') as f:
         return [parse_line(line) for line in f]
+
+def zipWith(x1, x2, fn):
+    return [fn(p[0],p[1]) for p in zip(x1,x2)]
