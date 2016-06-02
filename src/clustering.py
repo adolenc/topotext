@@ -5,10 +5,11 @@ from distances import bottleneck_distance
 import dionysus
 import matplotlib.pyplot as plt
 
-def cluster_distances(diagrams, labels=None):
+def cluster_distances(diagrams, p=None, labels=None):
     d = np.zeros((len(diagrams), len(diagrams)))
     # Number of diagrams for each cluster.
-    p = len(diagrams[0])
+    if not p:
+        p = len(diagrams[0])
     for pth in range(p):
         # Get pth diagram for each sample.
         pth_diagrams = map(lambda arr: arr[pth] , diagrams)
