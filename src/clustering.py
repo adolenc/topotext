@@ -6,13 +6,18 @@ import dionysus
 import matplotlib.pyplot as plt
 
 def cluster_distances(diagrams, labels=None):
-    x = ['one', 'two', 'three', 'four', 'five', 'six']
     d = np.zeros((len(diagrams), len(diagrams)))
+    # Number of diagrams for each cluster.
+    p = len(diagrams[0])
+    for pth in range(p):
+        # Get pth diagram for each sample.
+        pth_diagrams = map(lambda arr: arr[pth] , diagrams)
 
-    # Calculate distances on diagrams.
-    for i,dia1 in enumerate(diagrams):
-        for j,dia2 in enumerate(diagrams):
-            d[i][j] = bottleneck_distance(dia1, dia2)
+        # Calculate distances on diagrams.
+        for i,dia1 in enumerate(pth_diagrams):
+            for j,dia2 in enumerate(pth_diagrams):
+                print(i,j)
+                d[i][j] += bottleneck_distance(dia1, dia2)
 
     y = squareform(d)
     Z = hierarchy.linkage(y)

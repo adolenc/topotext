@@ -20,4 +20,4 @@ Rs = map(get_max_dist, Xs)
 print Rs
 cxs = map(cech, Xs)
 diagrams = [persistence_diagram(cx, R) for cx, R in zip(cxs, Rs)]
-cluster_distances(flatten(map(lambda diagram: [PersistenceDiagram(d, diagram[d]) for d in range(3)], diagrams)))
+cluster_distances(map(lambda diagram: [PersistenceDiagram(d, diagram[d]) for d in range(3)], diagrams))
