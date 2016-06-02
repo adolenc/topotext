@@ -61,4 +61,7 @@ def map_map(fn, array):
 def get_groups(X, y):
     indices = [np.where(y==k) for k in np.unique(y)]
     return [X[i] for i in indices]
-   
+
+def halve_group(X):
+    half = len(X)/2
+    return (X[:half], X[half:])
