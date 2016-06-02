@@ -8,7 +8,10 @@ def pca_proj(feature_matrix, n_comp=3):
 
 def alpha_shapes(feature_matrix):
     cx = Filtration()
-    fill_alpha_complex(feature_matrix.tolist(), cx)
+    projection = pca_proj(feature_matrix) #pca
+    fill_alpha_complex(projection.tolist(), cx)
+    for sx in cx:
+        sx.data = sx.data[0]
     return cx
 
 if __name__ == '__main__':

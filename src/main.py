@@ -19,7 +19,7 @@ pp = Preprocessor(Prepreprocessor, funcs, use_tfidf=3)
 X, y = pp.process(['../data/abstracts/', '../data/sports', '../data/reviews'])
 Xs = flatten(map(halve_group, get_groups(X, y)))
 Rs = map(get_max_dist, Xs)
-cxs = map(cech, Xs)
+cxs = map(alpha_shapes, Xs)
 diagrams = [persistence_diagram(cx, R) for cx, R in zip(cxs, Rs)]
 cluster_distances(map(lambda diagram: [PersistenceDiagram(d, diagram[d]) for d in range(3)], diagrams))
 for diagram in diagrams:
