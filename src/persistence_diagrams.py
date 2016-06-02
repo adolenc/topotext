@@ -31,7 +31,7 @@ def persistence_diagram(cx, max_r, max_dim=2):
     """ Compute persistence diagrams for cx, given max_r as the maximum
     distance between two points upto max_dim dimensions.
     """
-    # cx = fix_data(cx, max_r)
+    cx = fix_data(cx, max_r)
     f = Filtration(cx, data_dim_cmp)
     p = DynamicPersistenceChains(f)
     p.pair_simplices()

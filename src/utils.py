@@ -1,6 +1,7 @@
 from dionysus import Simplex
 from os import listdir
 import numpy as np
+from dionysus import PairwiseDistances,ExplicitDistances
 
 def read_file(filename):
     """ Read a file into a string. """
@@ -65,3 +66,8 @@ def get_groups(X, y):
 def halve_group(X):
     half = len(X)/2
     return (X[:half], X[half:])
+
+def get_max_dist(X):
+    distances = PairwiseDistances(X.tolist())
+    distances = ExplicitDistances(distances)
+    return max(flatten(distances.distances))
