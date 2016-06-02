@@ -18,4 +18,5 @@ Xs = flatten(map(halve_group, get_groups(X, y)))
 cxs = map(cech, Xs)
 diagrams = [persistence_diagram(cx, 1000) for cx in cxs]
 print diagrams
-cluster_distances(flatten(diagrams))
+
+cluster_distances(diagrams)
