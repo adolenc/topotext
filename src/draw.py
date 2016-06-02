@@ -12,9 +12,16 @@ def fix_infs(persistances):
         
 def draw_persistance_diagram(persistances):
     for key in persistances:
-        #TODO: add a y=x line in each graph
-        plt.figure()
-        plt.scatter([x[0] for x in persistances[key]], [x[1] for x in persistances[key]])
+        fig, ax = plt.subplots()
+        ax.scatter([x[0] for x in persistances[key]], [x[1] for x in persistances[key]])
+        lims = [
+            np.min([ax.get_xlim(), ax.get_ylim()]),  # min of both axes
+            np.max([ax.get_xlim(), ax.get_ylim()]),  # max of both axes
+        ]
+        ax.plot(lims, lims, 'k-', alpha=0.75, zorder=0)
+        ax.set_aspect('equal')
+        ax.set_xlim(lims)
+        ax.set_ylim(lims)
         plt.show()
 
 if __name__ == "__main__":
