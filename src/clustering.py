@@ -16,7 +16,6 @@ def cluster_distances(diagrams, labels=None):
         # Calculate distances on diagrams.
         for i,dia1 in enumerate(pth_diagrams):
             for j,dia2 in enumerate(pth_diagrams):
-                print(i,j)
                 d[i][j] += bottleneck_distance(dia1, dia2)
 
     y = squareform(d)
