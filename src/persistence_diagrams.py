@@ -41,8 +41,7 @@ def persistence_diagram(cx, max_r, max_dim=2):
     f = Filtration(cx, data_dim_cmp)
     p = DynamicPersistenceChains(f)
     p.pair_simplices()
-    diagrams = to_dict(p, f, max_dim)
-    return [PersistenceDiagram(d, diagrams[d]) for d in range(3)]
+    return to_dict(p, f, max_dim)
 
 if __name__ == '__main__':
     from utils import read_cx

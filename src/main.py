@@ -8,6 +8,7 @@ from cech import cech
 from alpha_shapes import alpha_shapes
 from persistence_diagrams import persistence_diagram
 from clustering import cluster_distances
+from dionysus import PersistenceDiagram
 
 
 funcs = [word_lengths_funcs, sentence_lengths_funcs, ratio_most_n_common_words, ratio_length_of_words_texts,
@@ -19,5 +20,4 @@ Rs = map(get_max_dist, Xs)
 print Rs
 cxs = map(cech, Xs)
 diagrams = [persistence_diagram(cx, R) for cx, R in zip(cxs, Rs)]
-print diagrams
-cluster_distances(flatten(diagrams))
+cluster_distances(flatten(map(lambda diagram: [PersistenceDiagram(d, diagram[d]) for d in range(3)], diagrams)))
