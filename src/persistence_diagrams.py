@@ -1,5 +1,6 @@
 from dionysus import Simplex, Filtration, StaticPersistence, \
-                     data_cmp, data_dim_cmp, DynamicPersistenceChains
+                     data_cmp, data_dim_cmp, DynamicPersistenceChains, \
+                     init_diagrams
 from math import floor
 
 def fix_data(cx, max_r, n_intervals=10):
@@ -34,7 +35,10 @@ def persistence_diagram(cx, max_r, max_dim=2):
     f = Filtration(cx, data_dim_cmp)
     p = DynamicPersistenceChains(f)
     p.pair_simplices()
-    return p
+    dia = init_diagrams(p,f)
+    print "diagram"
+    print dia
+    return dia
 
 if __name__ == '__main__':
     from utils import read_cx
