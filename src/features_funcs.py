@@ -1,6 +1,6 @@
-from utils import flatten, map_flatten, avg, map_map
+from utils import map_flatten, avg, map_map
 from collections import Counter
-from operator import eq, le, ge
+from operator import le, ge
 
 """ Helper functions """
 
