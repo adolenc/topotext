@@ -1,6 +1,6 @@
-from utils import flatten, map_flatten, avg, map_map
+from utils import map_flatten, avg, map_map
 from collections import Counter
-from operator import eq, le, ge
+from operator import le, ge
 
 """ Helper functions """
 
@@ -45,8 +45,7 @@ def word_lengths_funcs(texts):
     """
     Returns the ratio of (average word length)/(longest word length),
     """
-    fn = lambda x: map(len, x)
-    word_stats = map(min_max_avg, map(fn, map(flatten, texts)))
+    word_stats = map(min_max_avg, map_map(len, map_flatten(texts)))
     avg_max = map(lambda x:x[2]/float(x[1]), word_stats)
     return avg_max
 
@@ -56,8 +55,7 @@ def sentence_lengths_funcs(texts):
     Returns: - the ratio of (average sentence length)/(longest sentence length)
              - the ratio of (shortest sentence length)/(longest sentence length)
     """
-    fn = lambda x: map(len, x)
-    sent_stats = map(min_max_avg, map(fn, texts))
+    sent_stats = map(min_max_avg, map_map(len, texts))
     avg_max = map(lambda x:x[2]/float(x[1]), sent_stats)
     min_max = map(lambda x:x[0]/float(x[1]), sent_stats)
     return map(list,zip(avg_max, min_max))
