@@ -3,6 +3,12 @@ from dionysus import Simplex, Filtration, StaticPersistence, \
                      init_diagrams, PersistenceDiagram
 from math import floor
 
+def fix_infs(pers):
+    """ Replace positive infs in persistances (dictionary that has a list of doubles as values). """
+    max_j = int(np.unique(sorted([l[1] for key in pers for l in pers[key]]))[-2])
+    pers = {key : replace(pers[key], float("inf"), max_j) for key in pers}
+    return pers, max_j
+
 def fix_data(cx, max_r, n_intervals=10):
     """ Fix data for each sx in cx so that its birth falls onto integer
     interval [0, n_intervals), depending on its actual birth and max_r.
