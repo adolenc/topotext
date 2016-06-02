@@ -1,18 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from persistence_diagrams import fix_infs
+from persistence_diagrams import fix_infs,replace
 
-def replace(l, v1, v2):
-    """ In a list of doubles l, replace every occurance of v1
-    with v2 in the second element of the double. """
-    return [(x[0], v2) if x[1] == v1 else x for x in l]
-
-def fix_infs(pers):
-    """ Replace positive infs in persistances (dictionary that has a list of doubles as values). """
-    max_j = int(np.unique(sorted([l[1] for key in pers for l in pers[key]]))[-2])
-    pers = {key : replace(pers[key], float("inf"), max_j) for key in pers}
-    return pers, max_j
-        
 def draw_persistance_diagram(pers, max_j):
     i = 1
     plt.figure()

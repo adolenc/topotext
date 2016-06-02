@@ -5,22 +5,22 @@ from distances import bottleneck_distance
 import dionysus
 import matplotlib.pyplot as plt
 
-def cluster_distances(diagrams, labels=None):
+def cluster_distances(diagrams, ps=None, labels=None):
     d = np.zeros((len(diagrams), len(diagrams)))
     # Number of diagrams for each cluster.
-    p = len(diagrams[0])
-    for pth in range(p):
+    if not ps:
+        ps = range(len(diagrams[0]))
+    for pth in ps:
         # Get pth diagram for each sample.
         pth_diagrams = map(lambda arr: arr[pth] , diagrams)
 
         # Calculate distances on diagrams.
         for i,dia1 in enumerate(pth_diagrams):
             for j,dia2 in enumerate(pth_diagrams):
-                print(i,j)
                 d[i][j] += bottleneck_distance(dia1, dia2)
 
     y = squareform(d)
-    Z = hierarchy.linkage(y)
+    Z = hierarchy.linkage(y, method='average')
 
     plt.figure(figsize=(25, 10))
     plt.title('Hierarchical Clustering Dendrogram')
