@@ -33,7 +33,8 @@ def draw_bar_code_graph(pers, max_j):
         plt.xlabel("[birth, death]")
         for k in range(no_cx):
             i_, j_ = h[k]
-            plt.plot([i_, j_], [k+1, k+1], color="green", lw=0.5)
+            if i_ == j_: plt.scatter([i_, j_], [k+1, k+1], color="green", s=0.5)
+            else: plt.plot([i_, j_], [k+1, k+1], color="green", lw=0.5)
         i += 1
     plt.suptitle('Bar code graph for first three homologies', fontsize=16)
     plt.tight_layout(pad=3.5, h_pad=0.4)
@@ -47,7 +48,7 @@ if __name__ == "__main__":
 ##            3: [(3,4), (3, float("inf"))]}
     pers = {1: [(x, y) for x in np.random.random_integers(1,10,10) for y in np.random.random_integers(x,30,10)],
             2: [(1, y) for y in np.random.random_integers(1,30,100)],
-            3: [(3,4), (3, float("inf"))]}
+            3: [(3,3), (3,3), (3,3), (3,3), (3, float("inf"))]}
     pers, max_j = fix_infs(pers)
 ##    print pers
     draw_persistance_diagram(pers, max_j)
