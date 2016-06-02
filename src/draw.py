@@ -29,12 +29,12 @@ def draw_bar_code_graph(pers, max_j):
         no_cx = len(h) #number of simplexes in this dimension
         plt.subplot(310 + i).get_yaxis().set_visible(False)
         plt.axis([0, max_j+1, 0, no_cx+1])
+        plt.xticks(range(max_j+1))
         plt.ylabel('$H_{' + str(i-1) + '}$', fontsize=18)
         plt.xlabel("[birth, death]")
         for k in range(no_cx):
             i_, j_ = h[k]
-            if i_ == j_: plt.scatter([i_, j_], [k+1, k+1], color="green", s=0.5)
-            else: plt.plot([i_, j_], [k+1, k+1], color="green", lw=0.5)
+            plt.plot([i_, j_ + 5e-2], [k+1, k+1], color="green", lw=0.6)
         i += 1
     plt.suptitle('Bar code graph for first three homologies', fontsize=16)
     plt.tight_layout(pad=3.5, h_pad=0.4)
