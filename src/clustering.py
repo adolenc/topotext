@@ -23,9 +23,9 @@ def cluster_distances(diagrams, labels=None):
     plt.ylabel('distance')
     hierarchy.dendrogram(
         Z,
-        orientation='left',
-        leaf_rotation=90.,  # rotates the x axis labels
-        leaf_font_size=8.,  # font size for the x axis labels
+        # orientation='left',
+        # leaf_rotation=90.,  # rotates the x axis labels
+        # leaf_font_size=8.,  # font size for the x axis labels
         labels=labels
     )
     plt.show()

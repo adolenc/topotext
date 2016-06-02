@@ -15,7 +15,7 @@ funcs = [word_lengths_funcs, sentence_lengths_funcs, ratio_most_n_common_words, 
 pp = Preprocessor(Prepreprocessor, funcs, use_tfidf=3)
 X, y = pp.process(['../data/abstracts/', '../data/sports', '../data/reviews'])
 Xs = flatten(map(halve_group, get_groups(X, y)))
-cxs = map(alpha_shapes, Xs)
+cxs = map(cech, Xs)
 diagrams = [persistence_diagram(cx, 1000) for cx in cxs]
 print diagrams
-cluster_distances(diagrams)
+cluster_distances(flatten(diagrams))
