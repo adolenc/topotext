@@ -46,8 +46,17 @@ def read_cx(filename):
     with open(filename, 'r') as f:
         return _read_cx(f)
 
-def zipWith(x1, x2, fn):
+def zip_with(x1, x2, fn):
     return [fn(p[0],p[1]) for p in zip(x1,x2)]
+
+def avg(array):
+    return sum(array)/len(array)
+
+def map_flatten(array):
+    return map(flatten, array)
+
+def map_map(fn, array):
+    return map(lambda x: map(fn, x), array)
 
 def get_groups(X, y):
     indices = [np.where(y==k) for k in np.unique(y)]

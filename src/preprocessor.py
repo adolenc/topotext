@@ -1,8 +1,10 @@
 import numpy as np
 from tf_idf import *
-from utils import flatten,load_directory,write_matrix
+from utils import flatten,load_directory,write_matrix, map_flatten
 from prepreprocessor import *
-
+from features_funcs import word_lengths_funcs, sentence_lengths_funcs, ratio_most_n_common_words, \
+    ratio_length_of_words_texts
+from operator import ge
 
 class Preprocessor():
     """Preprocess datasets into an matrix of samples/features.
@@ -33,17 +35,21 @@ class Preprocessor():
         texts = map(load_directory, datasets)
         y = flatten([[n] * len(d) for n, d in enumerate(texts)])
         pp_texts = map(self.prepreprocessor_, flatten(texts))
-        X = np.array([flatten([f(text) for f in self.feature_funs_]) for text in pp_texts])
+        X = [np.array(f(pp_texts)) for f in self.feature_funs_]
+        X = [x.reshape(-1,1) if len(np.shape(x)) == 1 else x for x in X]
+        X = np.hstack(X)
         if self.use_tfidf_:
-            words = get_words(pp_texts, self.use_tfidf_)
-            M = get_M(pp_texts, words)
+            words = get_words(map_flatten(pp_texts), self.use_tfidf_)
+            M = get_M(map_flatten(pp_texts), words)
             tf_idf = get_tf_idf_M(M) # generate self.use_tfidf_ number of new features
             X = np.hstack((X, tf_idf)) # glue them to X
         return np.array(X), np.array(y)
 
 
 if __name__ == '__main__':
-    pp = Preprocessor(Prepreprocessor, [lambda ws: [len(ws)], lambda ws: [len(ws)/100.0]], use_tfidf=3)
+    funcs = [word_lengths_funcs, sentence_lengths_funcs, ratio_most_n_common_words, ratio_length_of_words_texts,
+                lambda text: ratio_length_of_words_texts(text, 8, ge)]
+    pp = Preprocessor(Prepreprocessor, funcs, use_tfidf=3)
     X, y = pp.process(['../data/abstracts/', '../data/abstracts'])
     print X.shape
     print X
