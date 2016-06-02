@@ -2,6 +2,12 @@ from dionysus import Simplex, Filtration, StaticPersistence, \
                      data_cmp, data_dim_cmp, DynamicPersistenceChains, \
                      init_diagrams, PersistenceDiagram
 from math import floor
+import numpy as np
+
+def replace(l, v1, v2):
+    """ In a list of doubles l, replace every occurance of v1
+    with v2 in the second element of the double. """
+    return [(x[0], v2) if x[1] == v1 else x for x in l]
 
 def fix_infs(pers):
     """ Replace positive infs in persistances (dictionary that has a list of doubles as values). """
@@ -37,7 +43,7 @@ def persistence_diagram(cx, max_r, max_dim=2):
     """ Compute persistence diagrams for cx, given max_r as the maximum
     distance between two points upto max_dim dimensions.
     """
-    cx = fix_data(cx, max_r)
+    # cx = fix_data(cx, max_r)
     f = Filtration(cx, data_dim_cmp)
     p = DynamicPersistenceChains(f)
     p.pair_simplices()
