@@ -1,5 +1,6 @@
 from dionysus import Simplex, Filtration, StaticPersistence, \
-                     data_cmp, data_dim_cmp, DynamicPersistenceChains
+                     data_cmp, data_dim_cmp, DynamicPersistenceChains, \
+                     init_diagrams, PersistenceDiagram
 from math import floor
 
 def fix_infs(pers):
@@ -17,16 +18,8 @@ def fix_data(cx, max_r, n_intervals=10):
         sx.data = floor(sx.data / max_r * (n_intervals-1))
     return cx
 
-def persistence_diagram(cx, max_r, max_dim=2):
-    """ Compute persistence diagrams for cx, given max_r as the maximum
-    distance between two points upto max_dim dimensions.
-    """
-    cx = fix_data(cx, max_r)
-    f = Filtration(cx, data_dim_cmp)
-    p = DynamicPersistenceChains(f)
-    p.pair_simplices()
+def to_dict(p, f, max_dim):
     smap = p.make_simplex_map(f)
-
     diagrams = {}
     for i in (i for i in p if i.sign()):
         b = smap[i]
@@ -39,6 +32,17 @@ def persistence_diagram(cx, max_r, max_dim=2):
             d = smap[i.pair()]
             diagrams[b.dimension()].append((b.data, d.data))
     return diagrams
+
+def persistence_diagram(cx, max_r, max_dim=2):
+    """ Compute persistence diagrams for cx, given max_r as the maximum
+    distance between two points upto max_dim dimensions.
+    """
+    # cx = fix_data(cx, max_r)
+    f = Filtration(cx, data_dim_cmp)
+    p = DynamicPersistenceChains(f)
+    p.pair_simplices()
+    diagrams = to_dict(p, f, max_dim)
+    return [PersistenceDiagram(d, diagrams[d]) for d in range(3)]
 
 if __name__ == '__main__':
     from utils import read_cx
