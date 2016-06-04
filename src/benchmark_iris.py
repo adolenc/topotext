@@ -16,13 +16,16 @@ from sklearn.datasets import load_iris
 funcs = [word_lengths_funcs, sentence_lengths_funcs, ratio_most_n_common_words, ratio_length_of_words_texts,
             lambda text: ratio_length_of_words_texts(text, 8, ge)]
 pp = Preprocessor(Prepreprocessor, funcs, use_tfidf=20)
-folder_names = ['abstracts', 'sports', 'reviews']
-X, y = pp.process(['../data/' + fold_n for fold_n in folder_names])
+classes = ['Setosa', 'Versicolour']#, 'Virginica']
+data = load_iris()
+# Take only two classes that are linearly separable.
+X = data.data[:100]
+y = data.target[:100]
 Xs = flatten(map(halve_group, get_groups(X, y)))
 Rs = map(get_max_dist, Xs)
 cxs = map(alpha_shapes, Xs)
 diagrams = [persistence_diagram(cx, R) for cx, R in zip(cxs, Rs)]
-titles = flatten([[name + '_train', name + '_test'] for name in folder_names])
+titles = flatten([[name + '_train', name + '_test'] for name in classes])
 cluster_distances(map(lambda diagram: [PersistenceDiagram(d, diagram[d]) for d in range(3)], diagrams), ps=[0,1,2], labels=titles)
 i = 0
 for diagram in diagrams:
