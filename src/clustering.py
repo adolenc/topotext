@@ -1,7 +1,7 @@
 from scipy.cluster import hierarchy
 from scipy.spatial.distance import squareform
 import numpy as np
-from distances import bottleneck_distance
+from distances import bottleneck_distance, wasserstein_distance
 import dionysus
 import matplotlib.pyplot as plt
 
@@ -33,7 +33,8 @@ def cluster_distances(diagrams, ps=None, labels=None):
         # leaf_font_size=8.,  # font size for the x axis labels
         labels=labels
     )
-    plt.show()
+    #plt.show()
+    plt.savefig('../figures/histogram.png', bbox_inches='tight')
     return Z
 
 
