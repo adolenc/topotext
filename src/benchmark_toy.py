@@ -15,7 +15,7 @@ def generate_circles(n, y_val):
     Generates a dataset where points are shaped into two circles,
     and labels them with y_val.
     """
-    X,y = make_circles(n)
+    X,y = make_circles(n, noise=0.1)
 
     return (X, [y_val] * len(X))
 
@@ -25,7 +25,8 @@ def generate_line(n, y_val):
     Generates dataset where points are shaped in a line,
     and labels then with y_val.
     """
-    X = map(lambda p: [p,p], [random() for _ in range(n)])
+    noise=0.1
+    X = map(lambda p: [p+(random()*noise),p+(random()*noise)], [random() for _ in range(n)])
     return (X, [y_val] * len(X))
 
 
