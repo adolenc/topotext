@@ -22,7 +22,8 @@ Rs = map(get_max_dist, Xs)
 cxs = map(alpha_shapes, Xs)
 diagrams = [persistence_diagram(cx, R) for cx, R in zip(cxs, Rs)]
 titles = flatten([[name + '_train', name + '_test'] for name in folder_names])
-cluster_distances(map(lambda diagram: [PersistenceDiagram(d, diagram[d]) for d in range(3)], diagrams), ps=[0,1,2], labels=titles)
+cluster_distances(map(lambda diagram: [PersistenceDiagram(d, diagram[d]) for d in range(3)], diagrams),
+                  ps=[0,1,2], labels=titles, name="main")
 i = 0
 for diagram in diagrams:
     diagram, max_j = fix_infs(diagram)

@@ -5,7 +5,7 @@ from distances import bottleneck_distance, wasserstein_distance
 import dionysus
 import matplotlib.pyplot as plt
 
-def cluster_distances(diagrams, ps=None, labels=None):
+def cluster_distances(diagrams, ps=None, labels=None, name="default"):
     d = np.zeros((len(diagrams), len(diagrams)))
     # Number of diagrams for each cluster.
     if not ps:
@@ -19,8 +19,12 @@ def cluster_distances(diagrams, ps=None, labels=None):
             for j,dia2 in enumerate(pth_diagrams):
                 d[i][j] += bottleneck_distance(dia1, dia2)
 
+    print "Clustering distances:"
+    for i in range(len(d)):
+        print "\t".join(map(str, d[i])) + '\n'
+
     y = squareform(d)
-    Z = hierarchy.linkage(y, method='average')
+    Z = hierarchy.linkage(y)
 
     plt.figure(figsize=(25, 10))
     plt.title('Hierarchical Clustering Dendrogram')
@@ -34,7 +38,7 @@ def cluster_distances(diagrams, ps=None, labels=None):
         labels=labels
     )
     #plt.show()
-    plt.savefig('../figures/histogram.png', bbox_inches='tight')
+    plt.savefig('../figures/histogram-' + name + '.png', bbox_inches='tight')
     return Z
 
 
