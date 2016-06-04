@@ -10,7 +10,6 @@ from persistence_diagrams import persistence_diagram,fix_infs
 from clustering import cluster_distances
 from dionysus import PersistenceDiagram
 from draw import draw_bar_code_graph,draw_persistance_diagram
-from sklearn.datas
 
 
 funcs = [word_lengths_funcs, sentence_lengths_funcs, ratio_most_n_common_words, ratio_length_of_words_texts,
