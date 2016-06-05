@@ -5,6 +5,7 @@ from features_funcs import word_lengths_funcs, sentence_lengths_funcs, ratio_mos
 from operator import ge
 from utils import flatten,get_groups,halve_group,get_max_dist
 from cech import cech
+from vietoris_rips import vietoris_rips
 from alpha_shapes import alpha_shapes,reduce_n_columns
 from persistence_diagrams import persistence_diagram,fix_infs
 from clustering import cluster_distances
@@ -14,7 +15,7 @@ from draw import draw_bar_code_graph,draw_persistance_diagram
 cx_method = cech
 dims = 3
 random_split = True
-use_default_R = False
+use_default_R = True
 
 funcs = [word_lengths_funcs, sentence_lengths_funcs, ratio_most_n_common_words, ratio_length_of_words_texts,
             lambda text: ratio_length_of_words_texts(text, 8, ge)]
