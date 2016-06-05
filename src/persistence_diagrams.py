@@ -40,14 +40,15 @@ def to_dict(p, f, max_dim):
             diagrams[b.dimension()].append((b.data, d.data))
     return diagrams
 
-def persistence_diagram(cx, max_r, X, max_dim=2):
+def persistence_diagram(cx, max_r, X, n_intervals=10, max_dim=2):
     """ Compute persistence diagrams for cx, given max_r as the maximum
     distance between two points upto max_dim dimensions.
     """
     cx.sort(data_dim_cmp)
     print "Current X:"
     print X
-    cx = fix_data(cx, max_r)
+    if n_intervals:
+        cx = fix_data(cx, max_r, n_intervals=n_intervals)
     f = Filtration(cx, data_dim_cmp)
     p = StaticPersistence(f)
     p.pair_simplices()
