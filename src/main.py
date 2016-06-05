@@ -14,6 +14,7 @@ from draw import draw_bar_code_graph,draw_persistance_diagram
 cx_method = cech
 dims = 3
 random_split = True
+use_default_R = False
 
 funcs = [word_lengths_funcs, sentence_lengths_funcs, ratio_most_n_common_words, ratio_length_of_words_texts,
             lambda text: ratio_length_of_words_texts(text, 8, ge)]
@@ -24,7 +25,10 @@ Xs = flatten([halve_group(g, random_split=random_split) for g in get_groups(X, y
 if cx_method == alpha_shapes:
     Xs = map(lambda X: reduce_n_columns(X, n=dims), Xs)
 cxs = map(cx_method, Xs)
-Rs = map(get_max_dist, Xs)
+if use_default_R:
+    Rs = map(get_max_dist, Xs)
+else:
+    Rs = map(lambda cx: max([sx.data for sx in cx]), cxs)
 diagrams = [persistence_diagram(cx, R, X) for cx, R, X in zip(cxs, Rs, Xs)]
 titles = flatten([[name + '_train', name + '_test'] for name in folder_names])
 cluster_distances(map(lambda diagram: [PersistenceDiagram(d, diagram[d]) for d in range(dims)], diagrams),
