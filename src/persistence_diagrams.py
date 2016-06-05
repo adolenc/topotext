@@ -19,8 +19,9 @@ def fix_data(cx, max_r, n_intervals=10):
     """ Fix data for each sx in cx so that its birth falls onto integer
     interval [0, n_intervals), depending on its actual birth and max_r.
     """
-    cx = sorted(cx, key=lambda sx: sx.data)
     for sx in cx:
+        if sx.data > max_r:
+            print "WOWOWOW", sx, max_r
         sx.data = floor(sx.data / max_r * (n_intervals-1))
     return cx
 
@@ -43,9 +44,10 @@ def persistence_diagram(cx, max_r, max_dim=2):
     """ Compute persistence diagrams for cx, given max_r as the maximum
     distance between two points upto max_dim dimensions.
     """
-    # cx = fix_data(cx, max_r)
+    cx.sort(data_dim_cmp)
+    cx = fix_data(cx, max_r)
     f = Filtration(cx, data_dim_cmp)
-    p = DynamicPersistenceChains(f)
+    p = StaticPersistence(f)
     p.pair_simplices()
     return to_dict(p, f, max_dim)
 

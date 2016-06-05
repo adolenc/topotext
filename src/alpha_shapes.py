@@ -1,23 +1,27 @@
 from dionysus import *
 import numpy as np
 from sklearn.decomposition import PCA
+from math import sqrt
 
-def pca_proj(feature_matrix, n_comp=3):
-    pca = PCA(n_comp)
-    return pca.fit_transform(feature_matrix)
+def reduce_n_columns(X, n=3):
+    """ Use PCA to reduce number of columns in X to n. """
+    if len(X[0]) <= n: return X
+    pca = PCA(n)
+    return pca.fit_transform(X)
 
-def alpha_shapes(feature_matrix):
+def alpha_shapes(X):
+    X = reduce_n_columns(X)
     cx = Filtration()
-    projection = pca_proj(feature_matrix) #pca
-    fill_alpha_complex(projection.tolist(), cx)
-    for sx in cx:
-        sx.data = sx.data[0]
+    fill_alpha_complex(X.tolist(), cx)
+    for sx in cx: # we need data to be just distances at which sx was added to cx
+        sx.data = sqrt(sx.data[0])
     return cx
 
 if __name__ == '__main__':
-    feature_matrix = np.reshape(np.random.sample(70), (10,7)) #sample matrix
-    projection = pca_proj(feature_matrix) #pca
-    alpha_shapes_cx = alpha_shapes(projection) #calculate alpha shapes
-    #iterate over the simplices in the complex (Filtration class)
-    for s in alpha_shapes_cx:
-        print s, s.data[0]
+    X = np.array([[0, 0, 0],
+                  [1, 0, 0.0000000001],
+                  [1, 1, 0],
+                  [5, 1, 0]])
+    alpha_shapes_cx = alpha_shapes(X)
+    for s in sorted(alpha_shapes_cx, key=lambda sx:sx.data):
+        print s
