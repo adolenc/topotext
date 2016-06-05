@@ -2,6 +2,7 @@ from dionysus import Simplex
 from os import listdir
 import numpy as np
 from dionysus import PairwiseDistances,ExplicitDistances
+import random
 
 def read_file(filename):
     """ Read a file into a string. """
@@ -63,7 +64,9 @@ def get_groups(X, y):
     indices = [np.where(y==k) for k in np.unique(y)]
     return [X[i] for i in indices]
 
-def halve_group(X):
+def halve_group(X, random_split=False):
+    if random_split:
+        random.shuffle(X)
     half = len(X)/2
     return (X[:half], X[half:])
 

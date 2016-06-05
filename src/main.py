@@ -13,17 +13,18 @@ from draw import draw_bar_code_graph,draw_persistance_diagram
 
 cx_method = cech
 dims = 3
+random_split = True
 
 funcs = [word_lengths_funcs, sentence_lengths_funcs, ratio_most_n_common_words, ratio_length_of_words_texts,
             lambda text: ratio_length_of_words_texts(text, 8, ge)]
 pp = Preprocessor(Prepreprocessor, funcs, use_tfidf=20)
 folder_names = ['abstracts', 'sports', 'reviews']
 X, y = pp.process(['../data/' + fold_n for fold_n in folder_names])
-Xs = flatten(map(halve_group, get_groups(X, y)))
+Xs = flatten([halve_group(g, random_split=random_split) for g in get_groups(X, y)])
 if cx_method == alpha_shapes:
     Xs = map(lambda X: reduce_n_columns(X, n=dims), Xs)
-Rs = map(get_max_dist, Xs)
 cxs = map(cx_method, Xs)
+Rs = map(get_max_dist, Xs)
 diagrams = [persistence_diagram(cx, R, X) for cx, R, X in zip(cxs, Rs, Xs)]
 titles = flatten([[name + '_train', name + '_test'] for name in folder_names])
 cluster_distances(map(lambda diagram: [PersistenceDiagram(d, diagram[d]) for d in range(dims)], diagrams),
