@@ -24,7 +24,7 @@ if cx_method == alpha_shapes:
     Xs = map(lambda X: reduce_n_columns(X, n=dims), Xs)
 Rs = map(get_max_dist, Xs)
 cxs = map(cx_method, Xs)
-diagrams = [persistence_diagram(cx, R) for cx, R in zip(cxs, Rs)]
+diagrams = [persistence_diagram(cx, R, X) for cx, R, X in zip(cxs, Rs, Xs)]
 titles = flatten([[name + '_train', name + '_test'] for name in folder_names])
 cluster_distances(map(lambda diagram: [PersistenceDiagram(d, diagram[d]) for d in range(dims)], diagrams),
                   labels=titles, name="main")

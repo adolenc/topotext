@@ -20,8 +20,8 @@ def fix_data(cx, max_r, n_intervals=10):
     interval [0, n_intervals), depending on its actual birth and max_r.
     """
     for sx in cx:
-        if sx.data > max_r:
-            print "WOWOWOW", sx, max_r
+        if sx.data >= max_r:
+            print "Bad max_R estimate; constructed sx: [", sx, "] estimated max R:", max_r
         sx.data = floor(sx.data / max_r * (n_intervals-1))
     return cx
 
@@ -40,11 +40,13 @@ def to_dict(p, f, max_dim):
             diagrams[b.dimension()].append((b.data, d.data))
     return diagrams
 
-def persistence_diagram(cx, max_r, max_dim=2):
+def persistence_diagram(cx, max_r, X, max_dim=2):
     """ Compute persistence diagrams for cx, given max_r as the maximum
     distance between two points upto max_dim dimensions.
     """
     cx.sort(data_dim_cmp)
+    print "Current X:"
+    print X
     cx = fix_data(cx, max_r)
     f = Filtration(cx, data_dim_cmp)
     p = StaticPersistence(f)
