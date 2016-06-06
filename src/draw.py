@@ -15,8 +15,8 @@ def draw_persistance_diagram(pers, max_j, title):
         plt.scatter([x[0] for x in pers[key]], [x[1] for x in pers[key]], s=15)
         i += 1
     plt.suptitle('Persistance diagrams for first three homologies: ' + title, fontsize=16)
-    plt.tight_layout(h_pad=0.2)
-    # plt.show()
+    plt.tight_layout(pad=3.5)
+##    plt.show()
     plt.savefig('../figures/pers_diagram_'+title+'.png', bbox_inches='tight')
 
 def sort_list_of_tuples(l):
@@ -28,18 +28,18 @@ def draw_bar_code_graph(pers, max_j, title):
     for key in pers:
         h = sort_list_of_tuples(pers[key])
         no_cx = len(h) #number of simplexes in this dimension
-        plt.subplot(310 + i).get_yaxis().set_visible(False)
+        plt.subplot(310 + i).get_yaxis().set_ticks([])
         plt.axis([0, max_j+1, 0, no_cx+1])
         # plt.xticks(range(max_j+1))
-        plt.ylabel('$H_{' + str(i-1) + '}$', fontsize=18)
-        plt.xlabel("[birth, death]")
+        plt.ylabel('$H_{' + str(i-1) + '}$', fontsize=16)
+        plt.xlabel('$[birth, death]$', fontsize=16)
         for k in range(no_cx):
             i_, j_ = h[k]
             plt.plot([i_, j_ + float(max_j)*1e-3], [k+1, k+1], color="green", lw=4)
         i += 1
     plt.suptitle('Bar code graph for first three homologies: ' + title, fontsize=16)
-    plt.tight_layout(pad=3.5, h_pad=0.4)
-    # plt.show()
+    plt.tight_layout(pad=3.5)
+##    plt.show()
     plt.savefig('../figures/bar_code_diagram_' + title + '.png', bbox_inches='tight')
 
 if __name__ == "__main__":
