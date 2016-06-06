@@ -40,7 +40,7 @@ def to_dict(p, f, max_dim):
             diagrams[b.dimension()].append((b.data, d.data))
     return diagrams
 
-def persistence_diagram(cx, max_r, X, n_intervals=10, max_dim=2):
+def persistence_diagram(cx, max_r, X=[], n_intervals=10, max_dim=2):
     """ Compute persistence diagrams for cx, given max_r as the maximum
     distance between two points upto max_dim dimensions.
     """
