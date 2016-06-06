@@ -35,7 +35,7 @@ def draw_bar_code_graph(pers, max_j, title):
         plt.xlabel("[birth, death]")
         for k in range(no_cx):
             i_, j_ = h[k]
-            plt.plot([i_, j_ + 1e-1], [k+1, k+1], color="green", lw=4)
+            plt.plot([i_, j_ + float(max_j)*1e-3], [k+1, k+1], color="green", lw=4)
         i += 1
     plt.suptitle('Bar code graph for first three homologies: ' + title, fontsize=16)
     plt.tight_layout(pad=3.5, h_pad=0.4)
@@ -53,5 +53,5 @@ if __name__ == "__main__":
             3: [(3,3), (3,3), (3,3), (3,3), (3, float("inf"))]}
     pers, max_j = fix_infs(pers)
 ##    print pers
-    draw_persistance_diagram(pers, max_j)
-    draw_bar_code_graph(pers, max_j)
+    draw_persistance_diagram(pers, max_j, "krentitle")
+    draw_bar_code_graph(pers, max_j, "krnetitle")
