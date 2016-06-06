@@ -1,0 +1,14 @@
+-describe the problem (Andrej)
+	*3 domains of texts
+	*we used peristance
+-describe preprocesing (Andrej)
+-describe the basic features (Andrej)
+-tf-idf as an extra feature (Rok) Don't describe just mention it!!!
+-show figures and describe what they mean (Rok)
+	*barplot
+	*persistance diagram
+-clustering (Peter)
+	*iris
+	*toyexample
+	*dendrogram
+
