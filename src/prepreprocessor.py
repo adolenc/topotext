@@ -8,6 +8,12 @@ def BasicPrepreprocessor(text):
 
     return Prepreprocessor(text, False, False, False)
 
+def RemoveStopwordsPrepreprocessor(text):
+    return Prepreprocessor(text, True, False, False)
+
+def StemLemPrepreprocessor(text):
+    return Prepreprocessor(text, False, True, True)
+
 def Prepreprocessor(text, remove_stopwords=True, stem=True, lemmatize=True):
     """
     Tokenize text.
