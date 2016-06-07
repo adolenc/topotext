@@ -41,7 +41,7 @@ if __name__ == '__main__':
     Xs = flatten(map(halve_group, get_groups(X, y)))
     Rs = map(get_max_dist, Xs)
     cxs = map(cech, Xs)
-    diagrams = [persistence_diagram(cx, R) for cx, R in zip(cxs, Rs)]
+    diagrams = [persistence_diagram(cx, R, n_intervals=None) for cx, R in zip(cxs, Rs)]
     titles = flatten([[name + '_train', name + '_test'] for name in classes])
     cluster_distances(map(lambda diagram: [PersistenceDiagram(d, diagram[d]) for d in range(3)], diagrams), ps=[0,1,2],
                       labels=titles, name="toy")
