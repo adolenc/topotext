@@ -1,0 +1,44 @@
+\documentclass[a4paper]{amsart}
+\usepackage{times}
+\usepackage[utf8]{inputenc}
+\usepackage{lipsum}
+
+\usepackage[bottom]{footmisc} % footnotes go on the bottom of the page
+\usepackage{newclude} % use \include* to avoid pagebreaks after \includes
+\usepackage{cite}
+\usepackage{graphicx} % for images
+\usepackage{float} % images should be where they are referenced
+\usepackage[center]{caption}
+\usepackage{subcaption}
+\usepackage{chngcntr}
+\usepackage{captcont}
+\usepackage{amsthm,amsmath,amssymb}
+\usepackage{hyperref}
+\usepackage[usenames,dvipsnames]{color}
+
+\counterwithin{figure}{section}
+\counterwithin{equation}{section}
+
+\newcommand{\todo}[1]{\textcolor{red}{TODO:~#1}\PackageWarning{TODO:}{#1!}}
+
+
+\title[Text Analysis Using Persistence Diagrams]{Computational Topology: Text Analysis Using Persistence Diagrams}
+\author[Andrej Dolenc, Rok Ivanšek, Peter Us]{Andrej Dolenc, Rok Ivanšek, Peter Us \\ \footnotesize Neža Mramor Kosta, Gregor Jerše}
+\date{\today}
+
+% \includeonly{description}
+\begin{document}
+\maketitle
+
+\include*{description}
+\include*{data}
+\include*{methods}
+\include*{results}
+\include*{summary}
+\include*{workload}
+
+% Sources
+\bibliographystyle{IEEEtranS}
+\bibliography{sources}
+
+ \end{document}
