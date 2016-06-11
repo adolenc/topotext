@@ -1,13 +1,44 @@
-\section{Description Of Data} 
-\label{sec:description_of_data}
+\section{Data Used}
+\label{sec:data_used}
 
-\lipsum[1-3]
+\subsection{Description of data}
+\label{sub:description_of_data}
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=\textwidth]{{img/sample}}
-  \caption{Sample caption}
-  \label{fig:fig_1}
-\end{figure}
+Our data consisted of text documents in English language from 3 domains: news
+articles about sports, abstracts from scientific papers, and movie reviews
+\todo{Citations required?}. Per each domain we had 20 documents, which we later
+split on train and test sets with 10 documents per set per domain. Each
+document contained at least 100 words in total, with sports articles averaging
+exactly 150 words per document, scientific abstracts $172.55$ words per
+document, and movie reviews $381.6$ words per document.
 
-\lipsum[2-3]
+\subsection{Preparation of data}
+\label{sub:preparation_of_data}
+
+Since we wanted to build topological complexes on this data, we had to somehow
+convert the textual documents into a set of points in some space of arbitrary
+dimensions. A common way of doing this involves first preprocessing the words
+in each text into their base form by applying word stemming and lemmatization
+algorithms. We also removed all the stop words from the documents and ignored
+whitespace in the resulting documents. After this process we are left with 60
+documents (20 per domain), on which individually we then count various
+occurrences:
+
+\begin{itemize}
+  \item average word legth,
+  \item average sentence length,
+  \item shortest sentence length,
+  \item total number of three most common words among all the words,
+  \item number of words of length $\le 3$, and
+  \item number of words of length $\ge 8$.
+\end{itemize}
+
+This gives us 6 counts per each document, which we can normalize to the
+interval $[0, 1]$, and use as a point in $6$-dimensional space representing
+the document.
+
+We also used another popular method for text preprocessing called term
+frequency-inverse document frequency (\textit{tf-idf} for short) to generate a number
+of additional (more useful) features. \todo{Description of how tf-idf works?}
+While we played around with the number of features we got from tf-idf, this
+gave us a bunch of additional values per each document.
