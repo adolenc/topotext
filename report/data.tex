@@ -5,12 +5,12 @@
 \label{sub:description_of_data}
 
 Our data consisted of text documents in English language from 3 domains: news
-articles about sports (\href{http://mlg.ucd.ie/datasets/bbc.html}{source}), abstracts from scientific papers, and movie reviews
-\todo{Citations required?}. Per each domain we had 20 documents, which we later
-split on train and test sets with 10 documents per set per domain. Each
-document contained at least 100 words in total, with sports articles averaging
-exactly 150 words per document, scientific abstracts $172.55$ words per
-document, and movie reviews $381.6$ words per document.
+articles about sports (\href{http://mlg.ucd.ie/datasets/bbc.html}{source}),
+abstracts from scientific papers, and movie reviews. Per each domain we had 20
+documents, which we later split on train and test sets with 10 documents per
+set per domain. Each document contained at least 100 words in total, with
+sports articles averaging exactly 150 words per document, scientific abstracts
+$172.55$ words per document, and movie reviews $381.6$ words per document.
 
 \subsection{Preparation of data}
 \label{sub:preparation_of_data}
@@ -38,7 +38,17 @@ interval $[0, 1]$, and use as a point in $6$-dimensional space representing
 the document.
 
 We also used another popular method for text preprocessing called term
-frequency-inverse document frequency (tf-idf for short) to generate a number
-of additional (more useful) features. The method tf-idf works as follows. For each selected word $w$  we get one feature vector, meaning for each text $t$ in the dataset we get one value, let's call it $v_{wt}$.  This value is calculated by the formula $v_{wt} = tf(w, t)idf(w)$, where $tf(w, t)$ is the number of times a word $w$ appears in text $t$ and $idf(w) = \log\frac{N}{d_{w}}$, where $N$ is the number of all texts in the dataset and $d_{w}$ tells us in how many texts the word $w$ appears in. Intuitively this means that words that appear in a lot of texts get weighed less (provide less information). Typicaly we take $n$ most common words is the whole collection of texts, which gives us $n$ features for each text ($n$ columns in a feature matrix). You can read more about tf-idf on \href{https://en.wikipedia.org/wiki/Tf%E2%80%93idf}{wikipedia}.
-While we played around with the number of features we got from tf-idf (parameter $n$), this
-gave us a bunch of additional values per each document.
+frequency-inverse document frequency (tf-idf for short)\footnote{You can read
+more about tf-idf at \url{https://en.wikipedia.org/wiki/Tf-idf}.} to generate a
+number of additional (more useful) features. The method tf-idf works as
+follows. For each selected word $w$  we get one feature vector, meaning for
+each text $t$ in the dataset we get one value, let's call it $v_{wt}$.  This
+value is calculated by the formula $v_{wt} = tf(w, t)idf(w)$, where $tf(w, t)$
+is the number of times a word $w$ appears in text $t$ and $idf(w) =
+\log\frac{N}{d_{w}}$, where $N$ is the number of all texts in the dataset and
+$d_{w}$ tells us in how many texts the word $w$ appears in. Intuitively this
+means that words that appear in a lot of texts get weighed less (provide less
+information). Typicaly we take $n$ most common words is the whole collection of
+texts, which gives us $n$ features for each text ($n$ columns in a feature
+matrix). While we played around with the number of features we got from tf-idf
+(parameter $n$), this gave us a bunch of additional values per each document.
