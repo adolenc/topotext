@@ -20,8 +20,8 @@ n_intervals = None
 funcs = []
 prepre = StemLemPrepreprocessor
 
-#funcs = [word_lengths_funcs, sentence_lengths_funcs, ratio_most_n_common_words, ratio_length_of_words_texts,
-#            lambda text: ratio_length_of_words_texts(text, 8, ge)]
+funcs = [word_lengths_funcs, sentence_lengths_funcs, ratio_most_n_common_words, ratio_length_of_words_texts,
+            lambda text: ratio_length_of_words_texts(text, 8, ge)]
 pp = Preprocessor(prepre, funcs, use_tfidf=50)
 folder_names = ['abstracts', 'sports', 'reviews']
 X, y = pp.process(['../data/' + fold_n for fold_n in folder_names])
