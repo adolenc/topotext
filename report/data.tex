@@ -25,7 +25,7 @@ documents (20 per domain), on which individually we then count various
 occurrences:
 
 \begin{itemize}
-  \item average word legth,
+  \item average word length,
   \item average sentence length,
   \item shortest sentence length,
   \item total number of three most common words among all the words,
@@ -48,7 +48,7 @@ is the number of times a word $w$ appears in text $t$ and $idf(w) =
 \log\frac{N}{d_{w}}$, where $N$ is the number of all texts in the dataset and
 $d_{w}$ tells us in how many texts the word $w$ appears in. Intuitively this
 means that words that appear in a lot of texts get weighed less (provide less
-information). Typicaly we take $n$ most common words is the whole collection of
+information). Typically we take $n$ most common words is the whole collection of
 texts, which gives us $n$ features for each text ($n$ columns in a feature
 matrix). While we played around with the number of features we got from tf-idf
 (parameter $n$), this gave us a bunch of additional values per each document.
