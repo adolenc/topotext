@@ -25,4 +25,9 @@ complex and Čech complex instead of alpha shapes. Since our favorite library
 for computational topology Dionysus doesn't come with a nice python wrapper for
 Čech complex, we had to write that ourselves.
 
-\todo{describe splitting interval $[0,R]$ to 10 parts}
+We also considered whether checking persistence at only select few time stops
+during complex's creation would in some way give better results than just
+checking it for the whole timespan. To do this, we computed the maximum
+distance $R$ between two points in each domain separately, split the interval
+$[0, R]$ to 10 pieces and then only checked complexes for those 10 resulting
+parameters.
