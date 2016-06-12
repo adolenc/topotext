@@ -1,12 +1,21 @@
-\section{Problem Description} 
+\section{Introduction} 
 \label{sec:problem_description}
 
-Persistence is a mathematical formalism for following how the shape changes (i.e. for following the homology groups and Betti numbers) as a complex grows or evolves. We can present this information in the form of persistance diagrams where for each homology class we have the time of their life (when it was formed) and death (when it dissappears) given as a set of integers $[i, j]$ that are relative to some underlying filtration that follows the forming of some complex $K$. The visualisation of a persistance diagram is then simply a scatter plot with $i$-s on the $x$-axis and $j$-s on the $y$-axis.\\
-\\
+Persistence is a mathematical formalism for following how the shape changes
+(i.e.\ for following the homology groups and Betti numbers) as a complex grows
+or evolves. We can present this information in the form of persistance diagrams
+where for each homology class we have the time of their life (when it was
+formed) and death (when it dissappears) given as a set of integers $[i, j]$
+that are relative to some underlying filtration that follows the forming of
+some complex $K$. The visualisation of a persistance diagram is then simply a
+scatter plot with $i$-s on the $x$-axis and $j$-s on the $y$-axis.
+
 The main idea behind this project was to determine whether or not persistence
 diagrams built on top of documents from different domains differ significantly
 enough between the domains that they alone could be used to classify the texts.
 Because of ease of computation we mainly restricted ourselves to generators up
 to and including with second dimension. This restriction comes with a benefit
-of being somewhat intuitively explainable: generators of dimension 0 count
-\todo{explanations}
+of being somewhat intuitively explainable: generators of dimension 0 follow how
+the complex is interconnected at different points during its creation (counting
+number of connected components), and generators of dimension 1 how the holes in
+the complex are created and filled in.
