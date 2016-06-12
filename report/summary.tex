@@ -1,4 +1,8 @@
-\section{Summary} 
+\section{Summary}
 \label{sec:summary}
 
-\lipsum[3-5]
+Persistence diagrams built on top of documents from different domains did not differ enough to correctly classify documents based on bottleneck distances only. However it should be noticed that bottleneck distances between diagrams is only one possible way of using persistence diagrams for a predictive task. From diagrams, a various number of other numerical features can be extracted (e.g. number of homology generators of a specific dimension, average living length of a specific dimension etc.) so further exploration in this direction could provide promising results. Also the number of samples used in this project was relatively small (60), so testing the methods on a bigger corpora could provide different results as well.
+
+We also show that this method works well on a toy example where homology of points in each group differ significantly. Therefore we believe that there are possible other applications (outside of text classification domains) that could benefit from the analysis of persistence diagrams.
+
+We notice the main benefit of using persistence diagrams as a predictive task that it relies on inner-class data structure, instead on finding a linearly separable representation of the data, as is the case in many other clustering or classification models. Therefore we see it as an interesting tool for data analysis where other simple linear models would fail. The other important benefit of using this method is that it can provide us additional numerical features that can be used to further improve an existing model.
