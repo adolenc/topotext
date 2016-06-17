@@ -68,8 +68,6 @@ src/cpp/cech_cx
 .idea
 
 #### Report
-## No pdf of the report
-report/*pdf
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
